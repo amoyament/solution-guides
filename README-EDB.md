@@ -1275,7 +1275,7 @@ Document actual failover times:
 | **AAP DC1** | Services running | `podman ps` shows all containers on all DC1 AAP nodes |
 | **AAP DC2** | Services stopped | `podman ps` shows no containers on DC2 AAP nodes |
 | **HAProxy** | Routing to PostgreSQL VIP | `psql -h 10.1.1.20 -U aap -d awx` connects successfully |
-| **AAP API** | Controller API responding | `curl -k https://aap.example.com/api/v2/ping/` returns 200 |
+| **AAP API** | AAP API responding | `curl -k https://aap.example.com/api/v2/ping/` returns 200 |
 | **Local Failover** | EFM promotes local standby | Stop pg-dc1-1; pg-dc1-2 becomes primary within 60s |
 | **Cross-DC Failover** | EFM promotes DC2 and starts AAP | Promote pg-dc2-1; AAP starts in DC2 within 5 minutes |
 | **GLB Routing** | Traffic redirects to DC2 | `curl https://aap.example.com` resolves to DC2 after failover |

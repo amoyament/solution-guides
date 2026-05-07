@@ -143,7 +143,7 @@ What makes up the solution?
 
 ### Ansible Automation Platform
 
-- **Ansible Automation Platform 2.5+** -- Required for enterprise Event-Driven Ansible (EDA Controller) support.
+- **Ansible Automation Platform 2.5+** -- Required for enterprise Event-Driven Ansible support.
 
 ### Featured Ansible Content Collections
 
@@ -784,7 +784,7 @@ Because this guide covers a reference architecture rather than a single tool int
 
 | Stage | What to Verify | Success Indicator |
 |-------|---------------|-------------------|
-| **1. EDA Response** | Rulebook activation is running and receiving events | EDA Controller shows the rulebook activation as **Running**; event log shows received events |
+| **1. EDA Response** | Rulebook activation is running and receiving events | AAP shows the rulebook activation as **Running**; event log shows received events |
 | **2. Enrichment Workflow** | AI analyzed the incident and notifications were sent | Workflow Visualizer shows all nodes green; chat/ITSM received the AI-generated diagnosis |
 | **3. Remediation Workflow** | Lightspeed generated a playbook and it was committed to Git | New playbook file exists in the Git repository; Job Template was created with the correct playbook |
 | **4. Execute Remediation** | The AI-generated playbook resolved the issue | Job Template run completes successfully; the application or service returns to steady state |

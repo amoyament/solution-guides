@@ -109,7 +109,7 @@ What makes up the solution?
 
 ### Ansible Automation Platform
 
-- **Ansible Automation Platform 2.5+** -- Required for enterprise Event-Driven Ansible (EDA Controller) support.
+- **Ansible Automation Platform 2.5+** -- Required for enterprise Event-Driven Ansible support.
 
 ### Featured Ansible Content Collections
 
@@ -566,7 +566,7 @@ Validate each stage of the pipeline independently:
 | Stage | What to Verify | How to Test | Success Indicator |
 |-------|---------------|-------------|-------------------|
 | **SQS Queue** | Messages are arriving in the queue | Send a test message: `aws sqs send-message --queue-url $QUEUE_URL --message-body '{"test": "eda-validation"}'` | Message appears in SQS console or via `aws sqs receive-message` |
-| **EDA + SQS** | EDA is polling and receiving messages | Check EDA Controller -- rulebook activation should show as **Running** | Event log shows received SQS messages |
+| **EDA + SQS** | EDA is polling and receiving messages | Check AAP -- rulebook activation should show as **Running** | Event log shows received SQS messages |
 | **Enrichment Workflow** | AI analyzed the incident and notifications were sent | Trigger a test alarm; check Workflow Visualizer | All workflow nodes green; chat/ITSM received the AI diagnosis |
 | **Remediation Workflow** | Lightspeed generated a playbook and it was committed | Check Git repo for new playbook; verify Job Template was created | Playbook file exists in repo; Job Template points to correct playbook |
 | **Execute Remediation** | The AI-generated playbook resolved the issue | Run the remediation Job Template | Job completes successfully; service returns to steady state |

@@ -83,7 +83,7 @@ What makes up the solution?
 
 ### Ansible Automation Platform
 
-- **Ansible Automation Platform 2.5+** -- Required for enterprise Event-Driven Ansible (EDA Controller) support and the Azure Service Bus event source plugin.
+- **Ansible Automation Platform 2.5+** -- Required for enterprise Event-Driven Ansible support and the Azure Service Bus event source plugin.
 
 ### Featured Ansible Content Collections
 
@@ -339,7 +339,7 @@ From here, the remediation follows the same pattern as the [AIOps Remediation Wo
 
 | Stage | What to Verify | Success Indicator |
 |-------|---------------|-------------------|
-| **1. Azure Event → EDA** | Message arrives in queue and EDA consumes it | EDA Controller shows the rulebook activation as **Running**; event log shows the Azure alert payload |
+| **1. Azure Event → EDA** | Message arrives in queue and EDA consumes it | AAP shows the rulebook activation as **Running**; event log shows the Azure alert payload |
 | **2. Enrichment Workflow** | AI analyzed the alert and notifications were sent | Workflow Visualizer shows all nodes green; Slack/ITSM received the AI diagnosis |
 | **3. Remediation Workflow** | Playbook was generated and committed | New playbook file exists in the Git repository; Job Template was created |
 | **4. Execute Remediation** | The fix was applied | Azure resource returns to healthy state; Azure Monitor alert auto-resolves |
@@ -372,7 +372,7 @@ az servicebus queue send \
 | EDA receives event but condition doesn't match | Azure alert payload structure differs from expected schema | Use `debug` action in the rulebook to print `event.body` and compare against your conditions |
 | Enrichment workflow runs but AI response is empty | Prompt is too vague or AI endpoint is unreachable | Verify the Red Hat AI server is running; test with a simple prompt first |
 | Azure VM info retrieval fails | Azure credentials in AAP are expired or lack permissions | Verify the Azure Service Principal credential; test with `azure.azcollection.azure_rm_virtualmachine_info` |
-| Messages pile up in the dead-letter queue | EDA consumer is crashing or message format is unexpected | Check EDA Controller logs; inspect dead-letter messages in Azure Portal for error details |
+| Messages pile up in the dead-letter queue | EDA consumer is crashing or message format is unexpected | Check EDA logs in AAP; inspect dead-letter messages in Azure Portal for error details |
 
 <h2 id="maturity-path"></h2>
 
