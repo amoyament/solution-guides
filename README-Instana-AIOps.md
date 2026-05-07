@@ -7,6 +7,8 @@
   }
 </style>
 
+<img src="assets/images/instana-hero.png" alt="Ansible + Instana" width="400">
+
 ## Overview
 
 Observability tools like IBM Instana detect thousands of infrastructure and application anomalies daily -- but detection alone does not fix the problem. Most organizations still route alerts to human on-call engineers for manual triage and remediation, creating alert fatigue, inconsistent responses, and mean time to resolution (MTTR) measured in hours instead of minutes.
