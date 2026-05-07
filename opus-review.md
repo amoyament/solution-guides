@@ -11,8 +11,8 @@
 | 2 | [Automated Incident Remediation with IBM Instana](#2-automated-incident-remediation-with-ibm-instana) | 8.9/10 | Dual-path architecture (EDA vs native); per-use-case operational impact and unusually complete validation |
 | 3 | [High-Availability AAP with EDB PostgreSQL DR](#3-high-availability-aap-with-edb-postgresql-dr) | 8.7/10 | Reference-grade DR architecture with diagrams, runbooks, and failback procedures |
 | 4 | [AIOps automation with Ansible](#4-aiops-automation-with-ansible) | 8.5/10 | Strong foundational reference architecture; best systems narrative, observability catalog, and playbook source mapping |
-| 5 | [AI Infrastructure automation with Ansible](#5-ai-infrastructure-automation-with-ansible) | 7.3/10 | Clear two-collection story (infra.ai + redhat.ai); needs framework alignment and deeper validation |
-| 6 | [Reducing MTTR with ServiceNow Ticket Enrichment](#6-reducing-mttr-with-servicenow-ticket-enrichment) | 7.1/10 | Good governance framing and LEAP/MCP positioning; needs YAML artifacts and deeper architecture |
+| 5 | [Unlock AIOps with ServiceNow LEAP and Ansible MCP server](#5-unlock-aiops-with-servicenow-leap-and-ansible-mcp-server) | 8.3/10 | Strong LEAP/MCP governance story with YAML artifacts, verification commands, and full framework alignment |
+| 6 | [AI Infrastructure automation with Ansible](#6-ai-infrastructure-automation-with-ansible) | 7.3/10 | Clear two-collection story (infra.ai + redhat.ai); needs framework alignment and deeper validation |
 | 7 | [Intelligent Assistant with Red Hat AI Inference Server](#7-intelligent-assistant-with-red-hat-ai-inference-server) | 6.9/10 | Strong hands-on RHAIIS + Lightspeed hookup; weakest framework alignment of published guides |
 
 ---
@@ -184,7 +184,46 @@ Score each category 1-5. Multiply by weight. Final score out of 10. Any category
 
 ---
 
-### 5. AI Infrastructure automation with Ansible
+### 5. Unlock AIOps with ServiceNow LEAP and Ansible MCP server
+
+**File:** [README-AIOps-ServiceNow.md](README-AIOps-ServiceNow.md)
+**Score: 8.3 / 10** *(updated May 2026 after major content expansion: YAML artifacts, verification commands, architecture diagrams, and full framework alignment)*
+
+| Category | Score |
+|----------|-------|
+| Outcome Clarity (20%) | 4.5 |
+| Architecture Clarity (20%) | 4.5 |
+| Technical Executability (25%) | 4 |
+| Validation/Testability (15%) | 4 |
+| Production Readiness (10%) | 4.5 |
+| Business Framing (10%) | 4 |
+
+**Stats:** ~3,500 words | 2 YAML blocks | 1 PNG architecture image + 1 SVG reference diagram + 1 Mermaid diagram + 1 ASCII topology | 4 walkthrough steps + 4 verification artifacts
+
+**Strengths:**
+- Complete framework alignment: Overview, Background, Solution, Workflow, Prerequisites, Solution Walkthrough, Validation, Maturity Path, and Related Guides all present
+- Two executable YAML artifacts: `ansible.controller.job_template` for governed template-as-code and `servicenow.itsm.incident` for optional correlation follow-up
+- Multi-format architecture coverage: PNG reference image, SVG diagram, collapsible Mermaid, and ASCII topology with trust boundary documentation
+- Dedicated MCP deployment topology section with explicit trust boundaries, TLS/mTLS, and token rotation guidance
+- Verbatim `curl` verification artifacts for each validation checkpoint (template visibility, job launch, job status, ITSM correlation)
+- Strong security/governance section treating integration as production automation with least privilege, change controls, and audit completeness
+- Operational impact table by stage and measurable success metrics table with quantifiable indicators
+- Arcade walkthrough embed as interactive companion to the written guide
+
+**Weaknesses:**
+- Walkthrough steps are UI-navigation-oriented (click paths) rather than API/CLI-oriented -- harder to reproduce without exact ServiceNow instance configuration
+- Guide title changed from the original "Reducing MTTR" framing; the new title is more accurate but the card description could better highlight the MTTR outcome
+- `servicenow.itsm` follow-up is marked optional -- could be stronger as a recommended pattern
+- Missing KB blockquote format consistency (KB link present but framed differently than other guides)
+
+**Suggestions:**
+1. Add a short API-based alternative for Step 2 (connector setup) so readers without LEAP UI access can validate programmatically
+2. Strengthen the `servicenow.itsm` follow-up from "optional" to "recommended" with a note on when to skip it
+3. Align KB blockquote under the title to match the exact format used in other published guides
+
+---
+
+### 6. AI Infrastructure automation with Ansible
 
 **File:** [README-IA.md](README-IA.md)
 **KB Article:** [access.redhat.com/articles/7118390](https://access.redhat.com/articles/7118390)
@@ -217,42 +256,6 @@ Score each category 1-5. Multiply by weight. Final score out of 10. Any category
 1. Add an Overview section with a problem statement and a consolidated Prerequisites table
 2. Show `provision.yml` execution alongside `ilab.yml` (or the AAP job settings equivalent)
 3. Expand Validation with sample success output and a 3-5 row troubleshooting table
-
----
-
-### 6. Reducing MTTR with ServiceNow Ticket Enrichment
-
-**File:** [README-AIOps-ServiceNow.md](README-AIOps-ServiceNow.md)
-**Score: 7.1 / 10**
-
-| Category | Score |
-|----------|-------|
-| Outcome Clarity (20%) | 4 |
-| Architecture Clarity (20%) | 3 |
-| Technical Executability (25%) | 3 |
-| Validation/Testability (15%) | 4 |
-| Production Readiness (10%) | 4 |
-| Business Framing (10%) | 4 |
-
-**Stats:** ~1,762 words | 0 YAML blocks | 1 ASCII flow diagram | 4 walkthrough steps
-
-**Strengths:**
-- Clear positioning of LEAP + MCP as the bridge between ServiceNow's "system of work" and AAP's "system of execution"
-- Dedicated security/governance section covering least privilege, approved job templates, change control, and audit alignment
-- Good persona table mapping roles to pain and value
-- Validation checkpoints mirror the actual integration lifecycle (token, connector, opportunity mapping, execution)
-- Ecosystem links to Automation Hub collections, Red Hat topic pages, Arcade demo, and related guides
-
-**Weaknesses:**
-- Zero YAML and no example job template, survey, inventory limit, or `servicenow.itsm` follow-up pattern
-- Architecture relies on one ASCII diagram and bullets -- MCP deployment topology and auth flow are not deep enough
-- "Workflow" section renamed to "End-to-End Architecture" which diverges from the framework
-- Validation is qualitative ("visible in AAP") without sample outputs or API calls
-
-**Suggestions:**
-1. Add 2 YAML excerpts: a minimal job template definition and a `servicenow.itsm` enrichment task
-2. Add one sequence or component diagram clarifying MCP hosting, network path, and trust boundaries
-3. Paste one verbatim success artifact (sanitized AAP job output or connector status text) per checkpoint
 
 ---
 
@@ -312,6 +315,7 @@ Score each category 1-5. Multiply by weight. Final score out of 10. Any category
 **Ranking rationale:**
 - Splunk and Instana tie at 8.9 but Splunk edges ahead on breadth (three use cases) while Instana leads on validation rigor
 - EDB at 8.7 is the deepest single-topic guide with the most operational runbook content
-- AIOps at 8.1 is the strongest foundational reference but held back by validation depth
-- IA (7.3) and ServiceNow (7.1) are solid but need framework alignment and more executable artifacts
+- AIOps at 8.5 is the strongest foundational reference with the best systems narrative and playbook source mapping
+- ServiceNow at 8.3 made the biggest jump (from 7.1) after adding YAML artifacts, verification commands, multi-format architecture diagrams, and full framework alignment
+- IA (7.3) is solid but needs framework alignment and more executable artifacts
 - RHAIIS (6.9) is the most hands-on procedural guide but weakest on framework structure
