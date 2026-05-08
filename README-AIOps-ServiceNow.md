@@ -108,17 +108,6 @@ ServiceNow Incident / Service Operations context
         → Outcomes and status feed back into the ServiceNow / LEAP experience
 ```
 
-```mermaid
-flowchart LR
-  SN[ServiceNow LEAP / Connectors]
-  GW[Ingress API GW / WAF]
-  MCP[AAP MCP server]
-  AAP[Ansible Automation Platform]
-  TGT[Managed endpoints]
-
-  SN -->|HTTPS TLS| GW -->|HTTPS| MCP -->|REST OAuth RBAC| AAP -->|SSH WinRM APIs| TGT
-```
-
 ### Operational impact by stage
 
 | Stage | Operational impact | Why it matters |
@@ -132,17 +121,14 @@ flowchart LR
 Place the **Ansible Automation Platform MCP server** where your organization routes all third-party SaaS integrations: typically **behind an HTTPS ingress** (reverse proxy, API gateway, or load balancer) with **TLS termination**, **allow lists**, and optional **mTLS** between proxy and MCP. ServiceNow holds the **integration identity** (API token or OAuth secret); the MCP server never stores broad admin passwords in clear text -- align with your vault and rotation policy.
 
 ```mermaid
-flowchart TD
-  SN["ServiceNow (LEAP UI)\nConnectors / assistant"]
-  GW["Ingress / API gateway\n(WAF, rate limit, mTLS)"]
-  MCP["Ansible AAP MCP server\n(Model Context Protocol)"]
-  AAP["Ansible Automation Platform\nJob templates, audit"]
-  TGT["Managed endpoints"]
+flowchart LR
+  SN[ServiceNow LEAP / Connectors]
+  GW[Ingress API GW / WAF]
+  MCP[AAP MCP server]
+  AAP[Ansible Automation Platform]
+  TGT[Managed endpoints]
 
-  SN -->|"HTTPS (TLS, org egress)"| GW
-  GW --> MCP
-  MCP -->|"REST API, OAuth / token (RBAC)"| AAP
-  AAP -->|"Inventory, credentials, EE"| TGT
+  SN -->|HTTPS TLS| GW -->|HTTPS| MCP -->|REST OAuth RBAC| AAP -->|SSH WinRM APIs| TGT
 ```
 
 **Trust boundaries to document in your runbook:** who can create API tokens, which job templates the integration user may launch, whether **survey** or **limit** is mandatory, and where job output is allowed to be copied back into ServiceNow (work notes vs system fields).
