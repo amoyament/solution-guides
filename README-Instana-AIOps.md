@@ -75,7 +75,7 @@ Beyond detection, Instana includes its own AI-powered capabilities that compleme
 
 Instana's native AI generates investigation guidance and suggested scripts. AAP provides the governed execution layer for trusted, existing automation. The two are complementary -- Instana identifies what to do, AAP ensures it is done safely and consistently.
 
-IBM owns both Instana and Red Hat, which means tighter integration than third-party observability tools. The [`ibm.instana`](https://catalog.redhat.com/en/software/collection/ibm/instana) Ansible Content Collection is available on Red Hat automation hub, and Instana monitors Ansible natively via a [callback plugin](https://github.com/instana/instana-ansible) -- creating a bidirectional feedback loop where the automation layer is itself observed.
+IBM owns both Instana and Red Hat, which means tighter integration than third-party observability tools. The [`ibm.instana`](https://console.redhat.com/ansible/automation-hub/collections/published/ibm/instana/details) Ansible Content Collection is available on Red Hat automation hub, and Instana monitors Ansible natively via a [callback plugin](https://github.com/instana/instana-ansible) -- creating a bidirectional feedback loop where the automation layer is itself observed.
 
 ---
 
@@ -87,7 +87,7 @@ IBM owns both Instana and Red Hat, which means tighter integration than third-pa
 
 - **[Red Hat Ansible Automation Platform](https://www.redhat.com/en/blog/aiops-and-ansible-automation-platform-where-ai-intelligence-meets-trusted-execution)** -- governed job template execution with RBAC, audit trail, approval workflows, and credential management via automation controller
 - **[Event-Driven Ansible](https://www.redhat.com/en/technologies/management/ansible/event-driven-ansible)** -- real-time event processing: webhook listener, rulebook conditions, and automated job template triggering (Path A)
-- **[`ibm.instana`](https://catalog.redhat.com/en/software/collection/ibm/instana) Ansible Content Collection** -- dedicated `instana_webhook` EDA source plugin for parsing Instana webhook payloads
+- **[`ibm.instana`](https://console.redhat.com/ansible/automation-hub/collections/published/ibm/instana/details) Ansible Content Collection** -- dedicated `instana_webhook` EDA source plugin for parsing Instana webhook payloads
 
 **IBM Instana -- the detection layer:**
 
@@ -123,7 +123,7 @@ IBM owns both Instana and Red Hat, which means tighter integration than third-pa
 
 | Collection | Source | Purpose |
 |-----------|--------|---------|
-| [`ibm.instana`](https://catalog.redhat.com/en/software/collection/ibm/instana) | Red Hat automation hub / Ansible Galaxy | Dedicated `instana_webhook` EDA source plugin |
+| [`ibm.instana`](https://console.redhat.com/ansible/automation-hub/collections/published/ibm/instana/details) | Red Hat automation hub / Ansible Galaxy | Dedicated `instana_webhook` EDA source plugin |
 | [`ansible.eda`](https://console.redhat.com/ansible/automation-hub/repo/published/ansible/eda/) | Ansible Certified Content (bundled) | Fallback webhook source, event filters |
 | [`community.mysql`](https://galaxy.ansible.com/ui/repo/published/community/mysql/) | Community | Database remediation tasks (Use Case 2) |
 | [`kubernetes.core`](https://console.redhat.com/ansible/automation-hub/repo/published/kubernetes/core/) | Ansible Certified Content | Kubernetes rollback tasks (Use Case 3) |
@@ -867,7 +867,7 @@ Start capturing these metrics before enabling automated remediation -- having a 
 
 - [AIOps and Ansible Automation Platform: Where AI intelligence meets trusted execution](https://www.redhat.com/en/blog/aiops-and-ansible-automation-platform-where-ai-intelligence-meets-trusted-execution)
 - [Red Hat -- Event-Driven Ansible](https://www.redhat.com/en/technologies/management/ansible/event-driven-ansible)
-- [Red Hat Automation Hub -- ibm.instana](https://catalog.redhat.com/en/software/collection/ibm/instana)
+- [Red Hat Automation Hub -- ibm.instana](https://console.redhat.com/ansible/automation-hub/collections/published/ibm/instana/details)
 - [IBM Instana Observability](https://www.ibm.com/products/instana)
 - [IBM Docs -- Webhook Alert Channel](https://www.ibm.com/docs/en/instana-observability/current?topic=alerting-webhooks)
 - [IBM Docs -- Smart Alerts](https://www.ibm.com/docs/en/instana-observability/current?topic=applications-smart-alerts)
