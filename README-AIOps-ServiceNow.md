@@ -110,11 +110,7 @@ ServiceNow Incident / Service Operations context
 
 ### Architecture diagram (reference)
 
-Use this **single-page reference image** in architecture reviews and customer decks; the ASCII blocks later in this section are for **runbook-style** copy-paste (Splunk/Instana guides follow the same pattern: PNG/SVG plus text diagrams).
-
-<img src="assets/images/servicenow_leap_mcp_aap_reference.svg" alt="Reference architecture: ServiceNow LEAP connects via HTTPS through ingress to the Ansible Automation Platform MCP server, which calls AAP to automate managed endpoints." style="max-width:100%;height:auto" width="920">
-
-**Caption:** Data plane — ServiceNow (LEAP, connectors, assistant) → HTTPS → enterprise ingress → **AAP MCP server** → AAP REST API → inventory/credentials/EE → targets. **Control plane** — RBAC on AAP job templates, audit logs, and token rotation in ServiceNow/AAP.
+Use this **single-page reference image** in architecture reviews and customer decks; the ASCII blocks later in this section are for **runbook-style** copy-paste (Splunk/Instana guides follow the same pattern: diagram plus text diagrams).
 
 <details>
 <summary>Optional: same topology as a Mermaid diagram (GitHub renders this)</summary>
