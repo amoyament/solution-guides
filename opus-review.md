@@ -10,8 +10,8 @@
 | 1 | [AIOps with Splunk and EDA](#1-aiops-with-splunk-and-event-driven-ansible) | 8.9/10 | Deepest multi-use-case guide; three integration patterns with strong validation and troubleshooting |
 | 2 | [Automated Incident Remediation with IBM Instana](#2-automated-incident-remediation-with-ibm-instana) | 8.9/10 | Dual-path architecture (EDA vs native); per-use-case operational impact and unusually complete validation |
 | 3 | [High-Availability AAP with EDB PostgreSQL DR](#3-high-availability-aap-with-edb-postgresql-dr) | 8.7/10 | Reference-grade DR architecture with diagrams, runbooks, and failback procedures |
-| 4 | [AIOps automation with Ansible](#4-aiops-automation-with-ansible) | 8.5/10 | Strong foundational reference architecture; best systems narrative, observability catalog, and playbook source mapping |
-| 5 | [Unlock AIOps with ServiceNow LEAP and Ansible MCP server](#5-unlock-aiops-with-servicenow-leap-and-ansible-mcp-server) | 8.7/10 | Strong LEAP/MCP governance story with MTTR focus, customer evidence, multi-agent visibility, and full framework alignment |
+| 4 | [Unlock AIOps with ServiceNow LEAP and Ansible MCP server](#4-unlock-aiops-with-servicenow-leap-and-ansible-mcp-server) | 8.7/10 | Strong LEAP/MCP governance story with MTTR focus, customer evidence, multi-agent visibility, and full framework alignment |
+| 5 | [AIOps automation with Ansible](#5-aiops-automation-with-ansible) | 8.5/10 | Strong foundational reference architecture; best systems narrative, observability catalog, and playbook source mapping |
 | 6 | [AI Infrastructure automation with Ansible](#6-ai-infrastructure-automation-with-ansible) | 7.3/10 | Clear two-collection story (infra.ai + redhat.ai); needs framework alignment and deeper validation |
 | 7 | [Intelligent Assistant with Red Hat AI Inference Server](#7-intelligent-assistant-with-red-hat-ai-inference-server) | 6.9/10 | Strong hands-on RHAIIS + Lightspeed hookup; weakest framework alignment of published guides |
 
@@ -146,45 +146,7 @@ Score each category 1-5. Multiply by weight. Final score out of 10. Any category
 
 ---
 
-### 4. AIOps automation with Ansible
-
-**File:** [README-AIOps.md](README-AIOps.md)
-**Score: 8.5 / 10** *(updated May 2026 after adding Red Hat Lightspeed content and terminology updates)*
-
-| Category | Score |
-|----------|-------|
-| Outcome Clarity (20%) | 4 |
-| Architecture Clarity (20%) | 5 |
-| Technical Executability (25%) | 4 |
-| Validation/Testability (15%) | 3 |
-| Production Readiness (10%) | 4.5 |
-| Business Framing (10%) | 4.5 |
-
-**Stats:** ~7,500 words | 8 YAML blocks | 6+ substantive workflow/concept images | 4 pipeline phases with 16 numbered substeps
-
-**Strengths:**
-- Strong systems narrative: clear contrast between deterministic EDA scaling and AI-in-the-middle architecture
-- Risk-aware layering with operational impact matrix and Crawl/Walk/Run framing
-- Eight YAML examples spanning rulebooks, AI completions, URIs, git publish, and dynamic AAP resources
-- Comprehensive reference tables for event types, observability tools, message queues, and AI endpoints
-- Boundary-oriented troubleshooting table fills a gap most architecture docs skip
-- New "Where Do Good Playbooks Come From?" section maps four playbook sources (Red Hat Lightspeed CVE, Advisor, RHEL System Roles, Automation code assistant) to maturity stages
-- Terminology update blockquote clarifies Ansible Lightspeed / Red Hat Insights rebranding inline
-
-**Weaknesses:**
-- Validation is organized by stage but lacks verbatim sample outputs -- weaker as a standalone cookbook
-- No single explicit "Solution Walkthrough" heading; depth is spread across sections 1-4
-- AAP YAML snippets embed HTML emoji in `name` fields, which breaks copy-paste as valid YAML
-- Missing KB blockquote under the title per repo convention
-
-**Suggestions:**
-1. Add verbatim expected output for each pipeline stage (event body, AI response structure, code assistant JSON)
-2. Sanitize YAML examples so template names are plain strings suitable for copy-paste
-3. Insert the KB blockquote under the H1 per publishing standards
-
----
-
-### 5. Unlock AIOps with ServiceNow LEAP and Ansible MCP server
+### 4. Unlock AIOps with ServiceNow LEAP and Ansible MCP server
 
 **File:** [README-AIOps-ServiceNow.md](README-AIOps-ServiceNow.md)
 **Score: 8.7 / 10** *(updated May 2026 -- MTTR-focused card, customer reference, multi-agent rationale, servicenow.itsm recommended)*
@@ -220,6 +182,44 @@ Score each category 1-5. Multiply by weight. Final score out of 10. Any category
 **Suggestions:**
 1. Add a short API-based alternative for Step 2 (connector setup) so readers without LEAP UI access can validate programmatically
 2. Consider adding a concrete multi-agent scenario (e.g., Cursor + LEAP both updating the same incident) to illustrate the feedback loop
+
+---
+
+### 5. AIOps automation with Ansible
+
+**File:** [README-AIOps.md](README-AIOps.md)
+**Score: 8.5 / 10** *(updated May 2026 after adding Red Hat Lightspeed content and terminology updates)*
+
+| Category | Score |
+|----------|-------|
+| Outcome Clarity (20%) | 4 |
+| Architecture Clarity (20%) | 5 |
+| Technical Executability (25%) | 4 |
+| Validation/Testability (15%) | 3 |
+| Production Readiness (10%) | 4.5 |
+| Business Framing (10%) | 4.5 |
+
+**Stats:** ~7,500 words | 8 YAML blocks | 6+ substantive workflow/concept images | 4 pipeline phases with 16 numbered substeps
+
+**Strengths:**
+- Strong systems narrative: clear contrast between deterministic EDA scaling and AI-in-the-middle architecture
+- Risk-aware layering with operational impact matrix and Crawl/Walk/Run framing
+- Eight YAML examples spanning rulebooks, AI completions, URIs, git publish, and dynamic AAP resources
+- Comprehensive reference tables for event types, observability tools, message queues, and AI endpoints
+- Boundary-oriented troubleshooting table fills a gap most architecture docs skip
+- New "Where Do Good Playbooks Come From?" section maps four playbook sources (Red Hat Lightspeed CVE, Advisor, RHEL System Roles, Automation code assistant) to maturity stages
+- Terminology update blockquote clarifies Ansible Lightspeed / Red Hat Insights rebranding inline
+
+**Weaknesses:**
+- Validation is organized by stage but lacks verbatim sample outputs -- weaker as a standalone cookbook
+- No single explicit "Solution Walkthrough" heading; depth is spread across sections 1-4
+- AAP YAML snippets embed HTML emoji in `name` fields, which breaks copy-paste as valid YAML
+- Missing KB blockquote under the title per repo convention
+
+**Suggestions:**
+1. Add verbatim expected output for each pipeline stage (event body, AI response structure, code assistant JSON)
+2. Sanitize YAML examples so template names are plain strings suitable for copy-paste
+3. Insert the KB blockquote under the H1 per publishing standards
 
 ---
 
