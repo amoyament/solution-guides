@@ -242,7 +242,6 @@ The rulebook listens for these events and triggers the AI risk analysis job temp
 | **Credential** | AAP credential (for `run_job_template`) |
 | **Restart policy** | `Always` (ensures the activation restarts automatically if the EDA controller restarts or the process crashes) |
 
-<!-- TODO: Screenshot of EDA rulebook activation running in the EDA controller UI -->
 ![EDA rulebook activation running](assets/images/eda-activation-running.png)
 
 ### Step 2: AI risk analysis and decision routing
@@ -349,10 +348,8 @@ After receiving the AI decision, the playbook creates an ITSM incident with the 
 >
 > Use custom credential types to inject API tokens as environment variables at runtime. Never hardcode secrets in playbooks. See <a target="_blank" href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/">Creating Custom Credential Types</a> in the AAP documentation.
 
-<!-- TODO: Screenshot of AI risk analysis job output in AAP showing the AI decision and rationale -->
 ![AI risk analysis job output](assets/images/ai-risk-analysis-output.png)
 
-<!-- TODO: Screenshot of ITSM incident created with AI risk assessment in the description -->
 ![ITSM incident with AI assessment](assets/images/itsm-incident-ai-assessment.png)
 
 ### Step 3: Rotate the certificate (PROCEED path)
@@ -424,11 +421,9 @@ The playbook expects a valid replacement certificate to already exist in the Win
 >
 > Assign the `Execute` role to the EDA service account and the on-call Windows admin team. Limit the `Admin` role to the automation architect team to prevent accidental template modification. The same job template is callable by EDA (automated) and by operators (manual emergency rotation).
 
-<!-- TODO: GIF of the rotation job running in AAP (cert found → IIS rebound → old cert removed → HTTPS verified) -->
-![Rotation job running](assets/images/cert-rotation-job.gif)
+![Rotation job output](assets/images/cert-rotation-job.png)
 
-<!-- TODO: Screenshot of HTTPS verification in browser showing the new certificate details -->
-![HTTPS verification in browser](assets/images/https-verification-browser.png)
+![Windows certificate store before and after rotation](assets/images/mmc-cert-store.png)
 
 ### Step 4: Schedule for maintenance window (SCHEDULE path)
 
@@ -480,7 +475,6 @@ The AI may choose SCHEDULE over PROCEED for several reasons: the current time fa
 
 The playbook also updates the ITSM incident with the schedule details so the ticket shows when the rotation will happen and why it was scheduled for later.
 
-<!-- TODO: Screenshot of the one-time schedule on the AAP Schedules page -->
 ![AAP one-time schedule](assets/images/aap-schedule-created.png)
 
 ### Step 5: Resolve in ITSM
@@ -513,7 +507,6 @@ After the rotation playbook completes successfully, it resolves the ITSM inciden
 
 The ITSM incident now has the full story: the AI risk assessment from Step 2 (as the initial description and work notes), and the rotation results from Step 3 (as the close notes). This provides a complete audit trail from detection through resolution.
 
-<!-- TODO: Screenshot of the resolved ITSM incident showing close notes with old/new thumbprints -->
 ![Resolved ITSM incident](assets/images/itsm-incident-resolved.png)
 
 ---
@@ -643,11 +636,11 @@ TASK [Display AI decision] *****************************************************
 ok: [localhost] => {
     "msg": [
         "DECISION: SCHEDULE",
-        "RISK LEVEL: HIGH",
-        "RATIONALE: Certificate has 5 days remaining which provides sufficient buffer
-         to wait for the scheduled maintenance window this Saturday. Currently during
-         peak business hours with high transaction volume due to quarterly financial
-         close, making immediate rotation too risky given F5 health monitor sensitivity."
+        "RISK LEVEL: MEDIUM",
+        "RATIONALE: Certificate has 5 days until expiry and the next maintenance window
+         (Saturday 02:00-06:00 US-Eastern) occurs within 4 days, providing safe margin.
+         Currently in peak business hours with 8600 active users and $2.1M daily
+         revenue impact makes immediate rotation too risky."
     ]
 }
 
@@ -655,7 +648,7 @@ TASK [Display scheduled rotation] **********************************************
 ok: [localhost] => {
     "msg": [
         "Rotation scheduled in AAP for: 20260627T060000Z",
-        "Schedule name: Scheduled cert rotation - 09843FFFE6C2",
+        "Schedule name: Scheduled cert rotation - 40298730226293",
         "The rotation job will execute automatically during the maintenance window."
     ]
 }
@@ -663,6 +656,54 @@ ok: [localhost] => {
 PLAY RECAP *********************************************************************
 localhost                  : ok=23   changed=2    unreachable=0    failed=0    skipped=6
 ```
+
+![AI risk analysis SCHEDULE decision](assets/images/ai-risk-analysis-schedule.png)
+
+### Test: ESCALATE Path
+
+To test the ESCALATE path, pass `additional_context` with a hard constraint that creates a conflict the AI cannot safely resolve on its own:
+
+```bash
+source .env.demo
+curl -X POST "${EDA_EVENT_STREAM_URL}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${EDA_TOKEN}" \
+  -d '{
+    "event_type": "cert_expiring",
+    "host": "'"${WINDOWS_PRIVATE_IP}"'",
+    "thumbprint": "'"$(grep old_cert vars/cert_thumbprints.yml | cut -d\" -f2)"'",
+    "days_left": 5,
+    "subject": "CN=demo.contoso.com",
+    "additional_context": "MANDATORY change freeze in effect until end of business Friday. No production changes permitted."
+  }'
+```
+
+Expected output:
+
+```
+TASK [Display AI decision] *****************************************************
+ok: [localhost] => {
+    "msg": [
+        "DECISION: ESCALATE",
+        "RISK LEVEL: HIGH",
+        "RATIONALE: Certificate expires in 5 days but mandatory change freeze prohibits
+         production changes until end of business Friday. This creates a conflict between
+         compliance requirements and operational necessity that requires management review."
+    ]
+}
+
+TASK [Display workflow summary] ************************************************
+ok: [localhost] => {
+    "msg": "Risk analysis complete. Decision: ESCALATE. ServiceNow: INC0021691"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=21   changed=2    unreachable=0    failed=0    skipped=8
+```
+
+![AI risk analysis ESCALATE decision](assets/images/ai-risk-analysis-escalate.png)
+
+> **Note:** The same `additional_context` can produce SCHEDULE or ESCALATE depending on how the AI evaluates the specific timing, certificate runway, and constraint severity. A "peak business hours" hint with enough days remaining typically yields SCHEDULE. A "mandatory change freeze" with tight expiry typically yields ESCALATE because the conflict between the freeze and the expiry timeline requires human judgment to resolve.
 
 ### Troubleshooting
 
